@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>게시판 글쓰기</title>
+  <script>
+    // 정규식 검사
+    function validateForm(e) {
+      e.preventDefault();
+      
+      const writer = document.getElementById("writer").value.trim();
+      const title = document.getElementById("title").value.trim();
+      const content = document.getElementById("content").value.trim();
+
+      const nameRegex = /^[가-힣a-zA-Z]{2,10}$/; // 2~10 글자 한글/영문
+      const titleRegex = /^.{2,50}$/; // 2~50자
+      const contentRegex = /^.{5,500}$/; // 5~500자
+
+      if (!nameRegex.test(writer)) {
+        alert("글쓴이는 2~10자의 한글/영문만 가능합니다.");
+        return false;
+      }
+      if (!titleRegex.test(title)) {
+        alert("제목은 2~50자 이내로 입력해주세요.");
+        return false;
+      }
+      if (!contentRegex.test(content)) {
+        alert("내용은 5~500자 이내로 입력해주세요.");
+        return false;
+      }
+
+      alert("글이 정상적으로 작성되었습니다 ✅");
+      return true;
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+  <form onsubmit="return validateForm(event)" 
+        class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-lg space-y-6">
+    <h1 class="text-2xl font-bold text-center text-gray-700">게시판 글쓰기</h1>
+    
+    <!-- 글쓴이 -->
+    <div>
+      <label for="writer" class="block mb-2 text-gray-600">글쓴이</label>
+      <input type="text" id="writer" name="writer" 
+             class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-400">
+    </div>
+
+    <!-- 제목 -->
+    <div>
+      <label for="title" class="block mb-2 text-gray-600">제목</label>
+      <input type="text" id="title" name="title" 
+             class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-400">
+    </div>
+
+    <!-- 내용 -->
+    <div>
+      <label for="content" class="block mb-2 text-gray-600">내용</label>
+      <textarea id="content" name="content" rows="5" 
+                class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-400"></textarea>
+    </div>
+
+    <!-- 공개 여부 -->
+    <div>
+      <span class="block mb-2 text-gray-600">공개 여부</span>
+      <label class="mr-4">
+        <input type="radio" name="visibility" value="public" class="mr-1"> 공개
+      </label>
+      <label>
+        <input type="radio" name="visibility" value="private" class="mr-1"> 비공개
+      </label>
+    </div>
+
+    <!-- 게시물 종류 -->
+    <div>
+      <span class="block mb-2 text-gray-600">게시물 종류</span>
+      <label class="mr-4">
+        <input type="checkbox" name="category" value="공지" class="mr-1"> 공지
+      </label>
+      <label class="mr-4">
+        <input type="checkbox" name="category" value="질문" class="mr-1"> 질문
+      </label>
+      <label>
+        <input type="checkbox" name="category" value="자유" class="mr-1"> 자유
+      </label>
+    </div>
+
+    <!-- 제출 버튼 -->
+    <div class="text-center">
+      <button type="submit" 
+              class="px-6 py-3 bg-blue-500 text-white rounded-xl shadow hover:bg-blue-600">
+        작성하기
+      </button>
+    </div>
+  </form>
+</body>
+</html>
